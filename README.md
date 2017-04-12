@@ -10,21 +10,21 @@
     ## there is no need for `gcloud config set compute/zone us-east1-b` if it is already done.
     gcloud container clusters create mappedinn-cluster
 
-# 2. Config the context for the kubectl
+## 2. Config the context for the kubectl
 
     gcloud container clusters get-credentials mappedinn-cluster --zone us-east1-b --project mappedinn
 
-# 3. Creation of the PersistentVolume (PV) and the PersistentVolumeClaim (PVC)
+## 3. Creation of the PersistentVolume (PV) and the PersistentVolumeClaim (PVC)
 
     # Create a PV based on the GCE persistent disk & claim it by PVC
     kubectl create -f 01-pv-gce.yml
 
-# 4. Creation of an NFS server
+## 4. Creation of an NFS server
 
     # Create a Deployment for the NFS server
     kubectl create -f 02-dep-nfs.yml
 
-# 5. Create a service for the NFS server to expose it
+## 5. Create a service for the NFS server to expose it
 
     # Expose the NFS server
     kubectl create -f 03-srv-nfs.yml
@@ -38,17 +38,17 @@ After exposing the NFS server, the IP address have to be obained through the com
 
 The IP address of the service is `10.247.250.208`. This IP address is used to configurate the file `04-pv-and-pvc-nfs.yml`.   
 
-# 6. Creation of NFS volume
+## 6. Creation of NFS volume
 
     # Creation of NFS volume (PV and PVC)
     kubectl create -f 04-pv-and-pvc-nfs.yml
 
-# 7. Create a Deployment of busybox for checking the NFS volume
+## 7. Create a Deployment of busybox for checking the NFS volume
 
     # create a Deployment of busybox
     kubectl create -f 05-dep-busybox.yml
 
-# Acutal issue
+## Acutal issue
 
 The Deployment `busybox` did not work since it was not able to get access to the NFS volume as it can be seen on the `kubectl describe pods`:
 
