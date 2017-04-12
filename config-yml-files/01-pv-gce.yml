@@ -1,0 +1,26 @@
+# requires to run this commmand `$ gcloud compute disks create --size=2GB --zone=us-east1-b gce-nfs-disk`
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: gce-nfs-disk
+    fsType: ext4
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc
+  labels:
+    app: test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
