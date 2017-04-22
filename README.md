@@ -120,3 +120,10 @@ In the dashboard, the error is as follows:
 **Unable to mount volumes for pod "nfs-busybox-2762569073-lhb5p_default(b1e7c901-1f14-11e7-a084-42010a8e0116)": timeout expired waiting for volumes to attach/mount for pod "default"/"nfs-busybox-2762569073-lhb5p". list of unattached/unmounted volumes=[my-pvc-nfs]**
 
 **Error syncing pod, skipping: timeout expired waiting for volumes to attach/mount for pod "default"/"nfs-busybox-2762569073-lhb5p". list of unattached/unmounted volumes=[my-pvc-nfs]**    
+
+## How is it fixed?
+
+Fixing the example was done at 2 points:
+
+* Changing the image of the NFS server to `image: gcr.io/google_containers/volume-nfs:0.8` in stead of `image: gcr.io/google-samples/nfs-server:1.1`
+* Changing the the PV path to `path: "/"` in stead of `path: "/exports"`

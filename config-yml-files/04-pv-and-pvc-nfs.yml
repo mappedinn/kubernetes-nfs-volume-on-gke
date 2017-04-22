@@ -10,7 +10,7 @@ spec:
   nfs:
     # FIXME: use the right IP
     server: 10.247.250.208
-    path: "/exports"
+    path: "/"
 
 ---
 kind: PersistentVolumeClaim
@@ -23,7 +23,3 @@ spec:
   resources:
     requests:
       storage: 1Mi
-
-
-# MountVolume.SetUp failed for volume "kubernetes.io/nfs/96e720fa-1e12-11e7-a0e2-42010a8e006e-nfs" (spec.Name: "nfs") pod "96e720fa-1e12-11e7-a0e2-42010a8e006e" (UID: "96e720fa-1e12-11e7-a0e2-42010a8e006e") with: mount failed: exit status 32 Mounting command: /home/kubernetes/bin/mounter Mounting arguments: 10.247.251.125:/exports /var/lib/kubelet/pods/96e720fa-1e12-11e7-a0e2-42010a8e006e/volumes/kubernetes.io~nfs/nfs nfs [] Output: Running mount using a rkt fly container run: group "rkt" not found, will use default gid when rendering images mount.nfs: rpc.statd is not running but is required for remote locking. mount.nfs: Either use '-o nolock' to keep locks local, or start statd. mount.nfs: an incorrect mount option was specified
-# Error syncing pod, skipping: timeout expired waiting for volumes to attach/mount for pod "default"/"nfs-busybox-2762569073-5lszw". list of unattached/unmounted volumes=[my-pvc-nfs]
