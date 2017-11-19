@@ -1,4 +1,9 @@
 
+###########################################################################################################
+# this file is not created to run from the console through this command ./00-run.sh
+# In fact, The IP address of the service is needed in the config file PV and PVC of the NFS server
+###########################################################################################################
+
 # create a GCE persistent disk
 gcloud compute disks create --size=110GB --zone=us-east1-b gce-nfs-disk
 
@@ -17,13 +22,13 @@ kubectl create -f 03-pv-and-pvc-nfs.yml
 kubectl create -f 04-dep-busybox.yml
 
 # checking if things are correctly working
-kubectl exec -ti nfs-busybox-2762569073-b2m99  -- cat /mnt/index.html
+kubectl exec nfs-busybox-2762569073-b2m99  -- cat /mnt/index.html
 
-# clean up the cluster
+# clean up the cluster (don't forget the clean up the cluster to not get charged)
 kubectl delete deployment nfs-busybox nfs-server
 kubectl delete service nfs-server
-kubectl delete pvc nfs nfs-pvc
-kubectl delete pv nfs nfs-pv
+kubectl delete pvc nfs
+kubectl delete pv nfs
 
 ## deleting the cluser
 gcloud container clusters delete mappedinn-cluster

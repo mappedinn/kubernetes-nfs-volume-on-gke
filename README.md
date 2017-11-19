@@ -1,5 +1,8 @@
 # Example on how to create kubernetes NFS volume on Google Container Engine (GKE)
 
+## TL;TR
+Have a look directly on [./config-yml-files/00-run.sh](./config-yml-files/00-run.sh)
+
 ## 1. Create a GKE cluster and GCE persistent disk
 
     # create a GCE persistent disk
@@ -43,3 +46,9 @@ The IP address of the service is `10.247.250.208`. This IP address is used to co
 
     # create a Deployment of busybox
     kubectl create -f 04-dep-busybox.yml
+
+
+## 7. Checking
+
+    # you have to get the id of the pod to make the check
+    kubectl exec nfs-busybox-2762569073-b2m99  -- cat /mnt/index.html
