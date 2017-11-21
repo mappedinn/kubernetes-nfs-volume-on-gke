@@ -17,7 +17,12 @@ gcloud container clusters get-credentials mappedinn-cluster --zone us-east1-b --
 
 kubectl create -f 01-dep-nfs.yml # have a look on https://kubernetes.io/docs/concepts/storage/volumes/#gcepersistentdisk
 kubectl create -f 02-srv-nfs.yml
-kubectl get services # you have to update the file with the new IP address of the service while declaring the pv in the file 04-pv-pvc
+
+
+# Update the file with the new IP address of the service while declaring the pv in the file 03-pv-pvc-nfs.yml
+export ClusterIP=$(kubectl describe svc nfs-server | grep '^IP' | sed -E 's/IP:[[:space:]]+//')
+sed "s/ClusterIP/$ClusterIP/"  03-pv-and-pvc-nfs.template > 03-pv-and-pvc-nfs.yml
+
 kubectl create -f 03-pv-and-pvc-nfs.yml
 kubectl create -f 04-dep-busybox.yml
 
