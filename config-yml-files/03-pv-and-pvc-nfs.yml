@@ -8,8 +8,8 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    # FIXME: use the right IP
-    server: 10.3.241.210
+    # FIXED: Use internal DNS name
+    server: nfs-server.default.svc.cluster.local
     path: "/"
 
 ---
