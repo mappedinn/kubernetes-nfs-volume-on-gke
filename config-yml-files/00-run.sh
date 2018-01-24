@@ -1,7 +1,6 @@
 
 ###########################################################################################################
-# this file is not created to run from the console through this command ./00-run.sh
-# In fact, The IP address of the service is needed in the config file PV and PVC of the NFS server
+# run from the console through this command `sh ./00-run.sh`
 ###########################################################################################################
 
 # create a GCE persistent disk
@@ -17,11 +16,10 @@ gcloud container clusters get-credentials mappedinn-cluster --zone us-east1-b --
 
 kubectl create -f 01-dep-nfs.yml # have a look on https://kubernetes.io/docs/concepts/storage/volumes/#gcepersistentdisk
 kubectl create -f 02-srv-nfs.yml
-kubectl get services # you have to update the file with the new IP address of the service while declaring the pv in the file 04-pv-pvc
 kubectl create -f 03-pv-and-pvc-nfs.yml
 kubectl create -f 04-dep-busybox.yml
 
-# checking if things are correctly working
+# check if things are correctly working
 kubectl exec nfs-busybox-2762569073-b2m99  -- cat /mnt/index.html
 
 # clean up the cluster (don't forget the clean up the cluster to not get charged)
@@ -30,7 +28,7 @@ kubectl delete service nfs-server
 kubectl delete pvc nfs
 kubectl delete pv nfs
 
-## deleting the cluser
+## delete the cluser
 gcloud container clusters delete mappedinn-cluster
 
 ## deleting the GCE PV
