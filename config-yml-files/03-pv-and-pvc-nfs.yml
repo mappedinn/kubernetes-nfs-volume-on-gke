@@ -9,7 +9,7 @@ spec:
     - ReadWriteMany
   nfs:
     # FIXED: Use internal DNS name
-    server: nfs-server.default.svc.cluster.local
+    server: 10.3.242.128 #nfs-server.default.svc.cluster.local
     path: "/"
 
 ---
