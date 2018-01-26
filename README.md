@@ -16,16 +16,16 @@ Have a look directly on [./config-yml-files/00-run.sh](./config-yml-files/00-run
 ## 1. Create a GKE cluster and GCE persistent disk
 
     # create a GCE persistent disk
-    gcloud compute disks create --size=110GB --zone=us-east1-b gce-nfs-disk
+    gcloud compute disks create --size=10GB --zone=us-east1-b gce-nfs-disk
 
     # create a GKE cluster
     ## I am assume that you already run this command `gcloud init`
     ## there is no need for `gcloud config set compute/zone us-east1-b` if it is already done.
-    gcloud container clusters create mappedinn-cluster
+    gcloud container clusters create mappedinn-cluster --num-nodes=1 --zone us-east1-b
 
 ## 2. Configure the context for the kubectl
 
-    gcloud container clusters get-credentials mappedinn-cluster --zone us-east1-b --project mappedinn
+    gcloud container clusters get-credentials mappedinn-cluster --zone us-east1-b --project amine-testing
 
 
 ## 3. Create an NFS server with its PersistentVolumeClaim (PVC)
@@ -50,5 +50,20 @@ Have a look directly on [./config-yml-files/00-run.sh](./config-yml-files/00-run
 
 ## 7. Check
 
-    # you have to get the id of the pod to make the check
+    # you have to get the id of the pod to make the check (you will have to identify the name of the pod)
     kubectl exec nfs-busybox-2762569073-b2m99  -- cat /mnt/index.html
+
+## 8. Clean up
+
+    # clean up the cluster (don't forget the clean up the cluster to not get charged)
+    kubectl delete deployment nfs-busybox
+    kubectl delete service nfs-server
+    kubectl delete deployment nfs-server
+    kubectl delete pvc nfs
+    kubectl delete pv nfs
+
+    ## delete the cluser
+    gcloud container clusters delete mappedinn-cluster --zone us-east1-b
+
+    ## deleting the GCE PV
+    gcloud compute disks delete gce-nfs-disk --zone us-east1-b
