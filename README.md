@@ -31,12 +31,12 @@ Have a look directly on [./config-yml-files/00-run.sh](./config-yml-files/00-run
 ## 3. Create an NFS server with its PersistentVolumeClaim (PVC)
 
     # Create a Deployment for the NFS server
-    kubectl create -f 02-dep-nfs.yml
+    kubectl create -f 01-dep-nfs.yml
 
 ## 4. Create a service for the NFS server to expose it
 
     # Expose the NFS server
-    kubectl create -f 03-srv-nfs.yml
+    kubectl create -f 02-srv-nfs.yml
 
 ## 5. Create NFS volume
 
