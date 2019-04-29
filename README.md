@@ -17,13 +17,14 @@ Have a look directly on [./config-yml-files/00-run.sh](./config-yml-files/00-run
 
     # create a GCE persistent disk
     gcloud compute disks create --size=10GB --zone=us-east1-b gce-nfs-disk
+    Zones list or regional for high availability check https://cloud.google.com/compute/docs/regions-zones/
 
     # create a GKE cluster
     ## I am assume that you already run this command `gcloud init`
     ## there is no need for `gcloud config set compute/zone us-east1-b` if it is already done.
     gcloud container clusters create mappedinn-cluster --num-nodes=1 --zone us-east1-b
 
-## 2. Configure the context for the kubectl
+## 2. Configure the context for the kubectl (if not set yet)
 
     gcloud container clusters get-credentials mappedinn-cluster --zone us-east1-b --project amine-testing
 
@@ -31,12 +32,12 @@ Have a look directly on [./config-yml-files/00-run.sh](./config-yml-files/00-run
 ## 3. Create an NFS server with its PersistentVolumeClaim (PVC)
 
     # Create a Deployment for the NFS server
-    kubectl create -f 02-dep-nfs.yml
+    kubectl create -f 01-dep-nfs.yml
 
 ## 4. Create a service for the NFS server to expose it
 
     # Expose the NFS server
-    kubectl create -f 03-srv-nfs.yml
+    kubectl create -f 02-srv-nfs.yml
 
 ## 5. Create NFS volume
 
@@ -47,6 +48,7 @@ Have a look directly on [./config-yml-files/00-run.sh](./config-yml-files/00-run
 
     # create a Deployment of busybox
     kubectl create -f 04-dep-busybox.yml
+    Or as an alternative add 'nfs' volume your your existing deployment (use this as a reference example)
 
 ## 7. Check
 
